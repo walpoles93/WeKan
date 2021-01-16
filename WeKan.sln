@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeKan.Domain", "src\WeKan.Domain\WeKan.Domain.csproj", "{F933AEFA-4D4A-498D-B4D5-E3FBB4400203}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeKan.Domain.UnitTests", "tests\WeKan.Domain.UnitTests\WeKan.Domain.UnitTests.csproj", "{1A2C480F-3FEC-4644-8F97-9D21721304A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F933AEFA-4D4A-498D-B4D5-E3FBB4400203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F933AEFA-4D4A-498D-B4D5-E3FBB4400203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F933AEFA-4D4A-498D-B4D5-E3FBB4400203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F933AEFA-4D4A-498D-B4D5-E3FBB4400203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A2C480F-3FEC-4644-8F97-9D21721304A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A2C480F-3FEC-4644-8F97-9D21721304A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A2C480F-3FEC-4644-8F97-9D21721304A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A2C480F-3FEC-4644-8F97-9D21721304A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DABF844D-657D-46B6-98CC-1BF3C99C0914}
+	EndGlobalSection
+EndGlobal
