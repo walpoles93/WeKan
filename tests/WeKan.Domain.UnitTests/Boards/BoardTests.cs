@@ -4,7 +4,7 @@ using WeKan.Domain.Boards;
 using WeKan.Domain.Cards;
 using Xunit;
 
-namespace WeKan.Domain.Tests.Boards
+namespace WeKan.Domain.UnitTests.Boards
 {
     public class BoardTests
     {

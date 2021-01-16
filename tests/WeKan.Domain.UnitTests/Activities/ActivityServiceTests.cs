@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using WeKan.Domain.Activities;
 using Xunit;
 
-namespace WeKan.Domain.Tests.Activities
+namespace WeKan.Domain.UnitTests.Activities
 {
     public class ActivityServiceTests
     {

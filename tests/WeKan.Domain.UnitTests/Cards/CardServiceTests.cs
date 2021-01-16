@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using WeKan.Domain.Cards;
 using Xunit;
 
-namespace WeKan.Domain.Tests.Cards
+namespace WeKan.Domain.UnitTests.Cards
 {
     public class CardServiceTests
     {

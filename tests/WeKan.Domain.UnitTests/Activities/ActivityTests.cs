@@ -3,7 +3,7 @@ using WeKan.Domain.Activities;
 using WeKan.Domain.Cards;
 using Xunit;
 
-namespace WeKan.Domain.Tests.Activities
+namespace WeKan.Domain.UnitTests.Activities
 {
     public class ActivityTests
     {
