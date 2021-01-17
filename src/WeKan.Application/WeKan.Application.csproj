@@ -13,8 +13,4 @@
     <ProjectReference Include="..\WeKan.Domain\WeKan.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\GetBoard\" />
-  </ItemGroup>
-
 </Project>
