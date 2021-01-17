@@ -46,6 +46,11 @@ namespace WeKan.Domain.Activities
             Description = description ?? string.Empty;
         }
 
+        public void ClearOrder()
+        {
+            Order = null;
+        }
+
         internal void ChangeOrder(int order)
         {
             Order = order;

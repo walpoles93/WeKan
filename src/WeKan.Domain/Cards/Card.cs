@@ -42,11 +42,6 @@ namespace WeKan.Domain.Cards
             _activities.Add(activity);
         }
 
-        public bool RemoveActivity(Activity activity)
-        {
-            return _activities.Remove(activity);
-        }
-
         internal void ChangeOrder(int order)
         {
             Order = order;

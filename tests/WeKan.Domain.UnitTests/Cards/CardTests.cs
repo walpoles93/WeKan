@@ -102,35 +102,6 @@ namespace WeKan.Domain.UnitTests.Cards
             Assert.Throws<ArgumentNullException>(action);
         }
 
-        [Fact]
-        public void RemoveActivity_ActivityExists_RemovesActivityAndReturnsTrue()
-        {
-            var activity = Activity.Create("activity-title");
-            var title = "test-title";
-            var card = Card.Create(title);
-            card.AddActivity(activity);
-
-            var result = card.RemoveActivity(activity);
-
-            Assert.Empty(card.Activities);
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void RemoveActivity_ActivityNotExists_ReturnsFalse()
-        {
-            var activity1 = Activity.Create("activity1-title");
-            var activity2 = Activity.Create("activity2-title");
-            var title = "test-title";
-            var card = Card.Create(title);
-            card.AddActivity(activity1);
-
-            var result = card.RemoveActivity(activity2);
-
-            Assert.Single(card.Activities);
-            Assert.False(result);
-        }
-
         [Theory]
         [InlineData(-1)]
         [InlineData(1)]

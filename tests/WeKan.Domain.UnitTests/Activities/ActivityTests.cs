@@ -129,5 +129,17 @@ namespace WeKan.Domain.UnitTests.Activities
 
             Assert.Equal(order, activity.Order);
         }
+
+        [Fact]
+        public void ClearOrder_ClearsOrder()
+        {
+            var title = "test-title";
+            var order = 1;
+            var activity = Activity.Create(title, order);
+
+            activity.ClearOrder();
+
+            Assert.Null(activity.Order);
+        }
     }
 }
