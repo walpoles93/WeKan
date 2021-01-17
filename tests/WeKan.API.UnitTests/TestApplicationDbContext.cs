@@ -5,7 +5,7 @@ using WeKan.Domain.Boards;
 using WeKan.Domain.Cards;
 using WeKan.Domain.Users;
 
-namespace WeKan.Application.UnitTests
+namespace WeKan.API.UnitTests
 {
     public class TestApplicationDbContext : DbContext, IApplicationDbContext
     {
