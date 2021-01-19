@@ -26,7 +26,7 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
             var handler = new GetBoardQueryHandler(context);
-            var request = new GetBoardQuery { BoardId = 1 };
+            var request = new GetBoardQuery(1);
 
             Task<GetBoardDto> action() => handler.Handle(request, cancellationToken);
 
@@ -49,7 +49,7 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
             await context.SaveChangesAsync(cancellationToken);
 
             var handler = new GetBoardQueryHandler(context);
-            var request = new GetBoardQuery { BoardId = 1 };
+            var request = new GetBoardQuery(1);
 
             var dto = await handler.Handle(request, cancellationToken);
             var dtoCard = dto.Cards.FirstOrDefault();

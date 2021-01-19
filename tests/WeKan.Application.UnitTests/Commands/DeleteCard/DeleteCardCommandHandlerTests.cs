@@ -24,7 +24,7 @@ namespace WeKan.Application.UnitTests.Commands.DeleteCard
             var dbName = $"{nameof(DeleteCardCommandHandlerTests)}_{nameof(Handle_CardIdNotExists_ThrowsNotFoundApplicationException)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var handler = new DeleteCardCommandHandler(context);
-            var request = new DeleteCardCommand { CardId = 1 };
+            var request = new DeleteCardCommand(1);
             var cancellationToken = new CancellationToken();
 
             Task<Unit> action() => handler.Handle(request, cancellationToken);
@@ -44,7 +44,7 @@ namespace WeKan.Application.UnitTests.Commands.DeleteCard
             await context.SaveChangesAsync(cancellationToken);
 
             var handler = new DeleteCardCommandHandler(context);
-            var request = new DeleteCardCommand { CardId = 1 };
+            var request = new DeleteCardCommand(1);
             await handler.Handle(request, cancellationToken);
 
             var cardFromDb = await context.Cards.FirstOrDefaultAsync(c => c.Id == 1);

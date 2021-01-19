@@ -24,7 +24,7 @@ namespace WeKan.Application.UnitTests.Commands.DeleteActivity
             var dbName = $"{nameof(DeleteActivityCommandHandlerTests)}_{nameof(Handle_ActivityIdNotExists_ThrowsNotFoundApplicationException)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var handler = new DeleteActivityCommandHandler(context);
-            var request = new DeleteActivityCommand { ActivityId = 1 };
+            var request = new DeleteActivityCommand(1);
             var cancellationToken = new CancellationToken();
 
             Task<Unit> action() => handler.Handle(request, cancellationToken);
@@ -44,7 +44,7 @@ namespace WeKan.Application.UnitTests.Commands.DeleteActivity
             await context.SaveChangesAsync(cancellationToken);
 
             var handler = new DeleteActivityCommandHandler(context);
-            var request = new DeleteActivityCommand { ActivityId = 1 };
+            var request = new DeleteActivityCommand(1);
             await handler.Handle(request, cancellationToken);
 
             var activityFromDb = await context.Activities.FirstOrDefaultAsync(a => a.Id == 1);

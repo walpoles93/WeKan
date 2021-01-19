@@ -3,7 +3,6 @@ using WeKan.Application.Common.Interfaces;
 using WeKan.Domain.Activities;
 using WeKan.Domain.Boards;
 using WeKan.Domain.Cards;
-using WeKan.Domain.Users;
 
 namespace WeKan.API.UnitTests
 {
@@ -28,6 +27,5 @@ namespace WeKan.API.UnitTests
         public DbSet<Board> Boards { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Activity> Activities { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

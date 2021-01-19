@@ -24,7 +24,7 @@ namespace WeKan.Application.UnitTests.Commands.DeleteBoard
             var dbName = $"{nameof(DeleteBoardCommandHandlerTests)}_{nameof(Handle_BoardIdNotExists_ThrowsNotFoundApplicationException)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var handler = new DeleteBoardCommandHandler(context);
-            var request = new DeleteBoardCommand { BoardId = 1 };
+            var request = new DeleteBoardCommand(1);
             var cancellationToken = new CancellationToken();
 
             Task<Unit> action() => handler.Handle(request, cancellationToken);
@@ -44,7 +44,7 @@ namespace WeKan.Application.UnitTests.Commands.DeleteBoard
             await context.SaveChangesAsync(cancellationToken);
 
             var handler = new DeleteBoardCommandHandler(context);
-            var request = new DeleteBoardCommand { BoardId = 1 };
+            var request = new DeleteBoardCommand(1);
             await handler.Handle(request, cancellationToken);
 
             var boardFromDb = await context.Boards.FirstOrDefaultAsync(b => b.Id == 1);
