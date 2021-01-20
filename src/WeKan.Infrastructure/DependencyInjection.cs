@@ -19,7 +19,7 @@ namespace WeKan.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(
-                    configuration.GetConnectionString("ApplicationDbContext"),
+                    configuration.GetConnectionString("WeKanContext"),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
             });
 

@@ -3,7 +3,6 @@ using Moq;
 using System;
 using System.Security.Claims;
 using WeKan.API.Services;
-using WeKan.Application.Common.Exceptions;
 using Xunit;
 
 namespace WeKan.API.UnitTests.Services
@@ -56,34 +55,6 @@ namespace WeKan.API.UnitTests.Services
             var currentUser = new CurrentUser(_httpContextAccessor.Object);
 
             Assert.True(currentUser.IsAuthenticated);
-        }
-
-        [Fact]
-        public void UserId_IsAuthenticatedFalse_ThrowsUnauthorisedApplicationException()
-        {
-            var user = new ClaimsPrincipal(new ClaimsIdentity()); // if no provider is set, user not authenticated
-            var httpContext = new DefaultHttpContext { User = user };
-            _httpContextAccessor.Setup(a => a.HttpContext).Returns(httpContext);
-
-            var currentUser = new CurrentUser(_httpContextAccessor.Object);
-
-            string action() => currentUser.UserId;
-
-            Assert.Throws<UnauthorisedApplicationException>(action);
-        }
-
-        [Fact]
-        public void UserId_NameIdentiferClaimNotExists_ThrowsUnauthorisedApplicationException()
-        {
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { }, "TestProvider")); // if provider is set, user is authenticated
-            var httpContext = new DefaultHttpContext { User = user };
-            _httpContextAccessor.Setup(a => a.HttpContext).Returns(httpContext);
-
-            var currentUser = new CurrentUser(_httpContextAccessor.Object);
-
-            string action() => currentUser.UserId;
-
-            Assert.Throws<UnauthorisedApplicationException>(action);
         }
 
         [Fact]
