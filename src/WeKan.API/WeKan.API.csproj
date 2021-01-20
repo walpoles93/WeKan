@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WeKan.Application\WeKan.Application.csproj" />
+    <ProjectReference Include="..\WeKan.Infrastructure\WeKan.Infrastructure.csproj" />
   </ItemGroup>
 
 
