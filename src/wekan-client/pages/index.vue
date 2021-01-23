@@ -89,9 +89,5 @@ export default {
     Logo,
     VuetifyLogo,
   },
-  async mounted() {
-    const result = await this.$axios.get('boards')
-    console.log({ result })
-  },
 }
 </script>
