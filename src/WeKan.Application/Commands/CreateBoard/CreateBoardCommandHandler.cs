@@ -7,7 +7,7 @@ using WeKan.Domain.Boards;
 
 namespace WeKan.Application.Commands.CreateBoard
 {
-    public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand>
+    public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, BoardCreatedDto>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -16,14 +16,14 @@ namespace WeKan.Application.Commands.CreateBoard
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<Unit> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
+        public async Task<BoardCreatedDto> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
         {
             var board = Board.Create(request.Title);
 
             _dbContext.Boards.Add(board);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new BoardCreatedDto { BoardId = board.Id };
         }
     }
 }

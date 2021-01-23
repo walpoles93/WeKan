@@ -44,8 +44,6 @@ export default {
   }),
   async mounted() {
     await this.getBoards()
-
-    this.$nuxt.$on('board-created', this.getBoards)
   },
   methods: {
     async getBoards() {

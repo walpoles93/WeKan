@@ -59,12 +59,9 @@ export default {
     async onClickSave() {
       this.isSaving = true
 
-      await this.$axios.$post('boards', this.board)
-      this.$nuxt.$emit('board-created')
+      const { boardId } = await this.$axios.$post('boards', this.board)
 
-      this.isSaving = false
-      this.dialog = false
-      this.board.title = ''
+      this.$router.push({ name: 'boards-id', params: { id: boardId } })
     },
   },
 }

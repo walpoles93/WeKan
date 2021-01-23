@@ -24,7 +24,7 @@ namespace WeKan.API.Controllers
         }
 
         [HttpPost]
-        public async Task<Unit> CreateBoard(CreateBoardCommand command) => await _mediator.Send(command);
+        public async Task<BoardCreatedDto> CreateBoard(CreateBoardCommand command) => await _mediator.Send(command);
 
         [HttpGet]
         public async Task<GetBoardsListDto> GetBoards() => await _mediator.Send(new GetBoardsListQuery());
