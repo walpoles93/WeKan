@@ -1,28 +1,15 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-hover v-slot="{ hover }">
-        <v-card
-          outlined
-          height="15rem"
-          :color="hover ? 'grey lighten-4' : undefined"
-          style="cursor: pointer"
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-card-text style="height: 100%">
-            <v-row align="center" justify="center" style="height: 100%">
-              <v-icon left>mdi-plus</v-icon>
-              Create Card
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-hover>
+      <v-btn depressed block tile color="primary" v-bind="attrs" v-on="on">
+        <v-icon left>mdi-plus</v-icon>
+        Create Activity
+      </v-btn>
     </template>
 
     <v-card>
       <v-card-title>
-        <span class="headline">Create Card</span>
+        <span class="headline">Create Activity</span>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
@@ -30,10 +17,14 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="card.title"
+                  v-model="activity.title"
                   label="Title"
                   required
                   :rules="[(v) => !!v || 'Title must not be empty']"
+                ></v-text-field>
+                <v-text-field
+                  v-model="activity.description"
+                  label="Description"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -60,7 +51,7 @@
 <script>
 export default {
   props: {
-    boardId: {
+    cardId: {
       type: Number,
       required: true,
     },
@@ -69,20 +60,25 @@ export default {
     dialog: false,
     valid: false,
     isSaving: false,
-    card: {
+    activity: {
       title: '',
+      description: '',
     },
   }),
   methods: {
     async onClickSave() {
       this.isSaving = true
 
-      await this.$axios.$post('cards', { ...this.card, boardId: this.boardId })
-      this.$nuxt.$emit('card-created')
+      await this.$axios.$post('activities', {
+        ...this.activity,
+        cardId: this.cardId,
+      })
+      this.$nuxt.$emit('activity-created')
 
       this.isSaving = false
       this.dialog = false
-      this.card.title = ''
+      this.activity.title = ''
+      this.activity.description = ''
     },
   },
 }

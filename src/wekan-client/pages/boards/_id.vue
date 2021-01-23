@@ -14,7 +14,7 @@
 
         <v-row v-if="boardId">
           <v-col cols="12">
-            <h1>{{ board.title }}</h1>
+            <h1 class="mb-4">{{ board.title }}</h1>
             <cards-grid :board-id="boardId" :cards="board.cards"></cards-grid>
           </v-col>
         </v-row>
@@ -52,6 +52,7 @@ export default {
       await this.getBoard(this.boardId)
 
       this.$nuxt.$on('card-created', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('activity-created', () => this.getBoard(this.boardId))
     }
   },
   methods: {
