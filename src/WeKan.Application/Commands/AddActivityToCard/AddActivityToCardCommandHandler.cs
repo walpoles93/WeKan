@@ -9,7 +9,7 @@ using WeKan.Domain.Activities;
 
 namespace WeKan.Application.Commands.AddActivityToCard
 {
-    public class AddActivityToCardCommandHandler : IRequestHandler<AddActivityToCardCommand>
+    public class AddActivityToCardCommandHandler : IRequestHandler<AddActivityToCardCommand, ActivityCreatedDto>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -18,7 +18,7 @@ namespace WeKan.Application.Commands.AddActivityToCard
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<Unit> Handle(AddActivityToCardCommand request, CancellationToken cancellationToken)
+        public async Task<ActivityCreatedDto> Handle(AddActivityToCardCommand request, CancellationToken cancellationToken)
         {
             var activity = Activity.Create(request.Title);
             var card = await _dbContext.Cards.FirstOrDefaultAsync(c => c.Id == request.CardId, cancellationToken);
@@ -28,7 +28,7 @@ namespace WeKan.Application.Commands.AddActivityToCard
             card.AddActivity(activity);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new ActivityCreatedDto { ActivityId = activity.Id, CardId = activity.CardId };
         }
     }
 }

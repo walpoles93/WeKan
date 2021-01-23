@@ -9,7 +9,7 @@ using WeKan.Domain.Cards;
 
 namespace WeKan.Application.Commands.AddCardToBoard
 {
-    public class AddCardToBoardCommandHandler : IRequestHandler<AddCardToBoardCommand>
+    public class AddCardToBoardCommandHandler : IRequestHandler<AddCardToBoardCommand, CardCreatedDto>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -18,7 +18,7 @@ namespace WeKan.Application.Commands.AddCardToBoard
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<Unit> Handle(AddCardToBoardCommand request, CancellationToken cancellationToken)
+        public async Task<CardCreatedDto> Handle(AddCardToBoardCommand request, CancellationToken cancellationToken)
         {
             var card = Card.Create(request.Title);
             var board = await _dbContext.Boards.FirstOrDefaultAsync(b => b.Id == request.BoardId, cancellationToken);
@@ -28,7 +28,7 @@ namespace WeKan.Application.Commands.AddCardToBoard
             board.AddCard(card);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new CardCreatedDto { CardId = card.Id, BoardId = card.BoardId };
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,9 +49,31 @@ namespace WeKan.Application.UnitTests.Commands.AddActivityToCard
             var request = new AddActivityToCardCommand { CardId = cardId, Title = "activity-title" };
             var cancellationToken = new CancellationToken();
 
-            Task<Unit> action() => handler.Handle(request, cancellationToken);
+            Task<ActivityCreatedDto> action() => handler.Handle(request, cancellationToken);
 
             await Assert.ThrowsAsync<NotFoundApplicationException>(action);
+        }
+
+        [Fact]
+        public async Task Handle_CardExists_ReturnsActivityCreatedDtoWithCorrectPropValues()
+        {
+            var dbName = $"{nameof(AddActivityToCardCommandHandlerTests)}_{nameof(Handle_CardExists_ReturnsActivityCreatedDtoWithCorrectPropValues)}";
+            using var context = TestApplicationDbContext.Create(dbName);
+            var card = Card.Create("card-title");
+            var cancellationToken = new CancellationToken();
+
+            context.Cards.Add(card);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var handler = new AddActivityToCardCommandHandler(context);
+            var request = new AddActivityToCardCommand { CardId = card.Id, Title = "activity-title" };
+
+            var activityCreatedDto = await handler.Handle(request, cancellationToken);
+            var activity = await context.Activities.FirstOrDefaultAsync(a => a.CardId == card.Id);
+
+            Assert.NotNull(activityCreatedDto);
+            Assert.Equal(activity.Id, activityCreatedDto.ActivityId);
+            Assert.Equal(activity.CardId, activityCreatedDto.CardId);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace WeKan.API.Controllers
         }
 
         [HttpPost]
-        public async Task<Unit> AddActivityToCard(AddActivityToCardCommand command) => await _mediator.Send(command);
+        public async Task<ActivityCreatedDto> AddActivityToCard(AddActivityToCardCommand command) => await _mediator.Send(command);
 
         [HttpPut]
         public async Task<Unit> EditActivity(EditActivityCommand command) => await _mediator.Send(command);

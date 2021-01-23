@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,9 +49,31 @@ namespace WeKan.Application.UnitTests.Commands.AddCardToBoard
             var request = new AddCardToBoardCommand { BoardId = boardId, Title = "card-title" };
             var cancellationToken = new CancellationToken();
 
-            Task<Unit> action() => handler.Handle(request, cancellationToken);
+            Task<CardCreatedDto> action() => handler.Handle(request, cancellationToken);
 
             await Assert.ThrowsAsync<NotFoundApplicationException>(action);
+        }
+
+        [Fact]
+        public async Task Handle_BoardExists_ReturnsCardCreatedDtoWithCorrectPropValues()
+        {
+            var dbName = $"{nameof(AddCardToBoardCommandHandlerTests)}_{nameof(Handle_BoardExists_ReturnsCardCreatedDtoWithCorrectPropValues)}";
+            using var context = TestApplicationDbContext.Create(dbName);
+            var board = Board.Create("board-title");
+            var cancellationToken = new CancellationToken();
+
+            context.Boards.Add(board);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var handler = new AddCardToBoardCommandHandler(context);
+            var request = new AddCardToBoardCommand { BoardId = board.Id, Title = "card-title" };
+
+            var cardCreatedDto = await handler.Handle(request, cancellationToken);
+            var card = await context.Cards.FirstOrDefaultAsync(c => c.BoardId == board.Id);
+
+            Assert.NotNull(cardCreatedDto);
+            Assert.Equal(card.Id, cardCreatedDto.CardId);
+            Assert.Equal(card.BoardId, cardCreatedDto.BoardId);
         }
     }
 }
