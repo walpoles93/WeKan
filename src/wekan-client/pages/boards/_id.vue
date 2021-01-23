@@ -15,6 +15,7 @@
         <v-row v-if="boardId">
           <v-col cols="12">
             <h1>{{ board.title }}</h1>
+            <cards-grid :board-id="boardId" :cards="board.cards"></cards-grid>
           </v-col>
         </v-row>
       </v-container>
@@ -26,12 +27,14 @@
 import SidebarLayout from '~/components/layouts/SidebarLayout'
 import AppSidebar from '~/components/AppSidebar'
 import CreateBoardDialog from '~/components/CreateBoardDialog'
+import CardsGrid from '~/components/CardsGrid'
 
 export default {
   components: {
     SidebarLayout,
     AppSidebar,
     CreateBoardDialog,
+    CardsGrid,
   },
   data: () => ({
     board: {
@@ -41,11 +44,15 @@ export default {
   }),
   computed: {
     boardId() {
-      return (this.$route.params && this.$route.params.id) || 0
+      return (this.$route.params && Number(this.$route.params.id)) || 0
     },
   },
   async mounted() {
-    if (this.boardId) await this.getBoard(this.boardId)
+    if (this.boardId) {
+      await this.getBoard(this.boardId)
+
+      this.$nuxt.$on('card-created', () => this.getBoard(this.boardId))
+    }
   },
   methods: {
     async getBoard(boardId) {
