@@ -27,7 +27,7 @@ namespace WeKan.API
                 .AddDomain()
                 .AddInfrastructure(Configuration)
                 .AddApplication()
-                .AddApi();
+                .AddApi(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,8 +42,17 @@ namespace WeKan.API
 
             app.UseHttpsRedirection();
 
+            app.UseCors(builder =>
+            {
+                builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

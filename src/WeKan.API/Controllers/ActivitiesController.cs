@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using WeKan.Application.Commands.ReorderActivities;
 namespace WeKan.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class ActivitiesController : ControllerBase
     {

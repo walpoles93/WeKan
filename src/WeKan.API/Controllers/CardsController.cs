@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using WeKan.Application.Commands.ReorderCards;
 namespace WeKan.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class CardsController : ControllerBase
     {
