@@ -10,7 +10,13 @@
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item v-for="(board, i) in boards" :key="i" link color="primary">
+        <v-list-item
+          v-for="(board, i) in boards"
+          :key="i"
+          link
+          :to="{ name: 'boards-id', params: { id: board.id } }"
+          color="primary"
+        >
           <v-list-item-icon>
             <v-icon>mdi-bulletin-board</v-icon>
           </v-list-item-icon>
