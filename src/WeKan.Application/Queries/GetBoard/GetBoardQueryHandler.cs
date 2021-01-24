@@ -39,7 +39,7 @@ namespace WeKan.Application.Queries.GetBoard
                     {
                         Id = c.Id,
                         Title = c.Title,
-                        Activities = c.Activities.Select(a => new GetBoardDto.Activity
+                        Activities = c.Activities.OrderBy(a => a.Order).Select(a => new GetBoardDto.Activity
                         {
                             Id = a.Id,
                             Title = a.Title,

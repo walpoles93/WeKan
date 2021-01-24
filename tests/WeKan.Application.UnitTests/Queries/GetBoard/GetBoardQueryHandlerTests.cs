@@ -95,5 +95,37 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
 
             Assert.Equal(orderedCardIds, dtoCardIds);
         }
+
+        [Fact]
+        public async Task Handle_BoardIdExists_ReturnsActivitiesInOrder()
+        {
+            var dbName = $"{nameof(GetBoardQueryHandlerTests)}_{nameof(Handle_BoardIdExists_ReturnsActivitiesInOrder)}";
+            using var context = TestApplicationDbContext.Create(dbName);
+            var cancellationToken = new CancellationToken();
+
+            var board = Board.Create("board-title");
+            var card = Card.Create("card1-title");
+            var activity1 = Activity.Create("activity1-title", 1);
+            var activity2 = Activity.Create("activity2-title", 0);
+            board.AddCard(card);
+            card.AddActivity(activity1);
+            card.AddActivity(activity2);
+            context.Boards.Add(board);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var orderedActivityIds = await context.Activities
+                .Where(a => a.CardId == card.Id)
+                .OrderBy(a => a.Order)
+                .Select(a => a.Id)
+                .ToListAsync(cancellationToken);
+
+            var handler = new GetBoardQueryHandler(context);
+            var request = new GetBoardQuery(1);
+
+            var dto = await handler.Handle(request, cancellationToken);
+            var dtoActivityIds = dto.Cards.First().Activities.Select(a => a.Id).ToList();
+
+            Assert.Equal(orderedActivityIds, dtoActivityIds);
+        }
     }
 }
