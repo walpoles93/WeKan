@@ -1,5 +1,10 @@
 <template>
-  <draggable :list="activities" group="activities" class="row">
+  <draggable
+    :list="activities"
+    group="activities"
+    class="row"
+    @change="onDragActivity"
+  >
     <v-col v-for="(activity, j) in activities" :key="j" cols="12">
       <v-card outlined>
         <v-card-text>
@@ -73,6 +78,26 @@ export default {
     activities: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    async onDragActivity(event) {
+      if (!event.added && !event.moved) return
+
+      if (event.added) {
+        const command = {
+          activityId: event.added.element && event.added.element.id,
+          cardId: this.cardId,
+        }
+        await this.$axios.$put('activities/movetocard', command)
+      }
+
+      const activityIds = this.activities.map((a) => a.id)
+      const result = await this.$axios.$put('activities/reorder', {
+        activityIds,
+      })
+
+      this.$nuxt.$emit('activity-moved', result)
     },
   },
 }

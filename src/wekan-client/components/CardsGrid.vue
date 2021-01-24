@@ -92,7 +92,7 @@ export default {
     async onDragCard(event) {
       if (event.moved) {
         const cardIds = this.cards.map((c) => c.id)
-        const result = await this.$axios.$put(`cards/reorder`, { cardIds })
+        const result = await this.$axios.$put('cards/reorder', { cardIds })
 
         this.$nuxt.$emit('card-moved', result)
       }
