@@ -1,28 +1,14 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-hover v-slot="{ hover }">
-        <v-card
-          outlined
-          height="15rem"
-          :color="hover ? 'grey lighten-4' : undefined"
-          style="cursor: pointer"
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-card-text style="height: 100%">
-            <v-row align="center" justify="center" style="height: 100%">
-              <v-icon left>mdi-plus</v-icon>
-              Create Card
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-hover>
+      <slot name="activator" :on="on" :attrs="attrs"></slot>
     </template>
 
     <v-card>
       <v-card-title>
-        <span class="headline">Create Card</span>
+        <span class="headline">
+          {{ isCreate ? 'Create Card' : 'Edit Card' }}
+        </span>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
@@ -48,7 +34,7 @@
           color="primary"
           :loading="isSaving"
           :disabled="!valid"
-          @click="onClickSave"
+          @click="() => (isCreate ? create() : edit())"
         >
           Save
         </v-btn>
@@ -64,17 +50,45 @@ export default {
       type: Number,
       required: true,
     },
+    id: {
+      type: Number,
+      default: 0,
+    },
+    title: {
+      type: String,
+      default: '',
+    },
   },
   data: () => ({
     dialog: false,
     valid: false,
     isSaving: false,
     card: {
+      cardId: 0,
       title: '',
     },
   }),
+  computed: {
+    isCreate() {
+      return !this.id
+    },
+  },
+  watch: {
+    id: {
+      handler(newId) {
+        this.card.cardId = newId
+      },
+      immediate: true,
+    },
+    title: {
+      handler(newTitle) {
+        this.card.title = newTitle
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    async onClickSave() {
+    async create() {
       this.isSaving = true
 
       const result = await this.$axios.$post('cards', {
@@ -82,6 +96,18 @@ export default {
         boardId: this.boardId,
       })
       this.$nuxt.$emit('card-created', result)
+
+      this.isSaving = false
+      this.dialog = false
+    },
+    async edit() {
+      this.isSaving = true
+
+      const result = await this.$axios.$put('cards', {
+        ...this.card,
+        boardId: this.boardId,
+      })
+      this.$nuxt.$emit('card-edited', result)
 
       this.isSaving = false
       this.dialog = false

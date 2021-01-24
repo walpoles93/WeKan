@@ -28,18 +28,19 @@
 
         <v-row v-if="boardId">
           <v-col cols="12">
-            <v-row align="center">
+            <v-row align="center" class="px-3">
               <h1>{{ board.title }}</h1>
+              <v-spacer></v-spacer>
               <create-edit-board-dialog :id="boardId" :title="board.title">
                 <template v-slot:activator="{ on, attr }">
-                  <v-btn icon v-bind="attr" class="ml-auto" v-on="on">
+                  <v-btn icon v-bind="attr" small v-on="on">
                     <v-icon>mdi-pencil-outline</v-icon>
                   </v-btn>
                 </template>
               </create-edit-board-dialog>
               <delete-board-dialog :id="boardId">
                 <template v-slot:activator="{ on, attr }">
-                  <v-btn icon color="error" v-bind="attr" v-on="on">
+                  <v-btn icon color="error" v-bind="attr" small v-on="on">
                     <v-icon>mdi-delete-outline</v-icon>
                   </v-btn>
                 </template>
@@ -57,7 +58,7 @@
 import SidebarLayout from '~/components/layouts/SidebarLayout'
 import AppSidebar from '~/components/AppSidebar'
 import CreateEditBoardDialog from '~/components/CreateEditBoardDialog'
-import DeleteBoardDialog from '~/components/DeleteCardDialog'
+import DeleteBoardDialog from '~/components/DeleteBoardDialog'
 import CardsGrid from '~/components/CardsGrid'
 
 export default {
@@ -84,7 +85,11 @@ export default {
       await this.getBoard(this.boardId)
 
       this.$nuxt.$on('card-created', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('card-edited', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('card-deleted', () => this.getBoard(this.boardId))
+
       this.$nuxt.$on('activity-created', () => this.getBoard(this.boardId))
+
       this.$nuxt.$on('board-edited', () => this.getBoard(this.boardId))
       this.$nuxt.$on('board-deleted', () =>
         this.$router.push({ name: 'boards-id' })

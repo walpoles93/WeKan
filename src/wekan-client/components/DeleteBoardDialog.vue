@@ -6,9 +6,9 @@
 
     <v-card>
       <v-card-title>
-        <span class="headline"> Delete Card </span>
+        <span class="headline"> Delete Board </span>
       </v-card-title>
-      <v-card-text>Are you sure you want to delete this card?</v-card-text>
+      <v-card-text>Are you sure you want to delete this board?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="dialog = false"> No </v-btn>
@@ -16,7 +16,7 @@
           depressed
           color="error"
           :loading="isDeleting"
-          @click="deleteCard"
+          @click="deleteBoard"
         >
           Yes
         </v-btn>
@@ -38,11 +38,11 @@ export default {
     isDeleting: false,
   }),
   methods: {
-    async deleteCard() {
+    async deleteBoard() {
       this.isDeleting = true
 
-      const result = await this.$axios.$delete(`cards/${this.id}`)
-      this.$nuxt.$emit('card-deleted', result)
+      const result = await this.$axios.$delete(`boards/${this.id}`)
+      this.$nuxt.$emit('board-deleted', result)
 
       this.isDeleting = false
       this.dialog = false
