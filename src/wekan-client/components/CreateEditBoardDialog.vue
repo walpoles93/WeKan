@@ -1,15 +1,14 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn depressed block tile color="primary" v-bind="attrs" v-on="on">
-        <v-icon left>mdi-plus</v-icon>
-        Create Activity
-      </v-btn>
+    <template v-slot:activator="{ on, attr }">
+      <slot name="activator" :on="on" :attr="attr"></slot>
     </template>
 
     <v-card>
       <v-card-title>
-        <span class="headline">Create Activity</span>
+        <span class="headline">
+          {{ isCreate ? 'Create Board' : 'Edit Board' }}
+        </span>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
@@ -17,7 +16,7 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="activity.title"
+                  v-model="board.title"
                   label="Title"
                   required
                   :rules="[(v) => !!v || 'Title must not be empty']"
@@ -35,7 +34,7 @@
           color="primary"
           :loading="isSaving"
           :disabled="!valid"
-          @click="onClickSave"
+          @click="() => (isCreate ? create() : edit())"
         >
           Save
         </v-btn>
@@ -47,28 +46,57 @@
 <script>
 export default {
   props: {
-    cardId: {
+    id: {
       type: Number,
-      required: true,
+      default: 0,
+    },
+    title: {
+      type: String,
+      default: '',
     },
   },
   data: () => ({
     dialog: false,
     valid: false,
     isSaving: false,
-    activity: {
+    board: {
+      boardId: 0,
       title: '',
     },
   }),
+  computed: {
+    isCreate() {
+      return !this.id
+    },
+  },
+  watch: {
+    id: {
+      handler(newId) {
+        this.board.boardId = newId
+      },
+      immediate: true,
+    },
+    title: {
+      handler(newTitle) {
+        this.board.title = newTitle
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    async onClickSave() {
+    async create() {
       this.isSaving = true
 
-      const result = await this.$axios.$post('activities', {
-        ...this.activity,
-        cardId: this.cardId,
-      })
-      this.$nuxt.$emit('activity-created', result)
+      const result = await this.$axios.$post('boards', this.board)
+      this.$nuxt.$emit('board-created', result)
+
+      this.$router.push({ name: 'boards-id', params: { id: result.boardId } })
+    },
+    async edit() {
+      this.isSaving = true
+
+      await this.$axios.$put('boards', this.board)
+      this.$nuxt.$emit('board-edited', { boardId: this.board.boardId })
 
       this.isSaving = false
       this.dialog = false

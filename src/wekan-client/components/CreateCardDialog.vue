@@ -77,12 +77,14 @@ export default {
     async onClickSave() {
       this.isSaving = true
 
-      await this.$axios.$post('cards', { ...this.card, boardId: this.boardId })
-      this.$nuxt.$emit('card-created')
+      const result = await this.$axios.$post('cards', {
+        ...this.card,
+        boardId: this.boardId,
+      })
+      this.$nuxt.$emit('card-created', result)
 
       this.isSaving = false
       this.dialog = false
-      this.card.title = ''
     },
   },
 }

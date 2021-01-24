@@ -27,17 +27,24 @@
         </v-list-item>
       </v-list>
 
-      <create-board-dialog></create-board-dialog>
+      <create-edit-board-dialog>
+        <template v-slot:activator="{ on, attr }">
+          <v-btn depressed block tile color="primary" v-bind="attr" v-on="on">
+            <v-icon left>mdi-plus</v-icon>
+            Create Board
+          </v-btn>
+        </template>
+      </create-edit-board-dialog>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import CreateBoardDialog from '~/components/CreateBoardDialog'
+import CreateEditBoardDialog from '~/components/CreateEditBoardDialog'
 
 export default {
   components: {
-    CreateBoardDialog,
+    CreateEditBoardDialog,
   },
   data: () => ({
     boards: [],

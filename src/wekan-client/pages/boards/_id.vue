@@ -8,13 +8,43 @@
       <v-container fluid class="pa-8">
         <v-row v-if="!boardId">
           <v-col cols="12">
-            <create-board-dialog></create-board-dialog>
+            <create-edit-board-dialog>
+              <template v-slot:activator="{ on, attr }">
+                <v-btn
+                  depressed
+                  block
+                  tile
+                  color="primary"
+                  v-bind="attr"
+                  v-on="on"
+                >
+                  <v-icon left>mdi-plus</v-icon>
+                  Create Board
+                </v-btn>
+              </template>
+            </create-edit-board-dialog>
           </v-col>
         </v-row>
 
         <v-row v-if="boardId">
           <v-col cols="12">
-            <h1 class="mb-4">{{ board.title }}</h1>
+            <v-row align="center">
+              <h1>{{ board.title }}</h1>
+              <create-edit-board-dialog :id="boardId" :title="board.title">
+                <template v-slot:activator="{ on, attr }">
+                  <v-btn icon v-bind="attr" class="ml-auto" v-on="on">
+                    <v-icon>mdi-pencil-outline</v-icon>
+                  </v-btn>
+                </template>
+              </create-edit-board-dialog>
+              <delete-board-dialog :id="boardId">
+                <template v-slot:activator="{ on, attr }">
+                  <v-btn icon color="error" v-bind="attr" v-on="on">
+                    <v-icon>mdi-delete-outline</v-icon>
+                  </v-btn>
+                </template>
+              </delete-board-dialog>
+            </v-row>
             <cards-grid :board-id="boardId" :cards="board.cards"></cards-grid>
           </v-col>
         </v-row>
@@ -26,14 +56,16 @@
 <script>
 import SidebarLayout from '~/components/layouts/SidebarLayout'
 import AppSidebar from '~/components/AppSidebar'
-import CreateBoardDialog from '~/components/CreateBoardDialog'
+import CreateEditBoardDialog from '~/components/CreateEditBoardDialog'
+import DeleteBoardDialog from '~/components/DeleteCardDialog'
 import CardsGrid from '~/components/CardsGrid'
 
 export default {
   components: {
     SidebarLayout,
     AppSidebar,
-    CreateBoardDialog,
+    CreateEditBoardDialog,
+    DeleteBoardDialog,
     CardsGrid,
   },
   data: () => ({
@@ -53,6 +85,10 @@ export default {
 
       this.$nuxt.$on('card-created', () => this.getBoard(this.boardId))
       this.$nuxt.$on('activity-created', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('board-edited', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('board-deleted', () =>
+        this.$router.push({ name: 'boards-id' })
+      )
     }
   },
   methods: {
