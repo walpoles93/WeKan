@@ -22,10 +22,6 @@
                   required
                   :rules="[(v) => !!v || 'Title must not be empty']"
                 ></v-text-field>
-                <v-text-field
-                  v-model="activity.description"
-                  label="Description"
-                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -62,7 +58,6 @@ export default {
     isSaving: false,
     activity: {
       title: '',
-      description: '',
     },
   }),
   methods: {
@@ -78,7 +73,6 @@ export default {
       this.isSaving = false
       this.dialog = false
       this.activity.title = ''
-      this.activity.description = ''
     },
   },
 }

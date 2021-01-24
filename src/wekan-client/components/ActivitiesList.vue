@@ -2,8 +2,7 @@
   <v-row>
     <v-col v-for="(activity, j) in activities" :key="j" cols="12">
       <v-card outlined>
-        <v-card-title>{{ activity.title }}</v-card-title>
-        <v-card-text>{{ activity.description }}</v-card-text>
+        <v-card-text>{{ activity.title }}</v-card-text>
       </v-card>
     </v-col>
     <v-col cols="12">
