@@ -1,5 +1,5 @@
 <template>
-  <draggable v-model="activities" group="activities" class="row">
+  <draggable :list="activities" group="activities" class="row">
     <v-col v-for="(activity, j) in activities" :key="j" cols="12">
       <v-card outlined>
         <v-card-text>

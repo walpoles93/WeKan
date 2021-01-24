@@ -35,7 +35,7 @@ namespace WeKan.Application.Queries.GetBoard
                 {
                     Id = b.Id,
                     Title = b.Title,
-                    Cards = b.Cards.Select(c => new GetBoardDto.Card
+                    Cards = b.Cards.OrderBy(c => c.Order).Select(c => new GetBoardDto.Card
                     {
                         Id = c.Id,
                         Title = c.Title,

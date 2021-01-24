@@ -1,5 +1,5 @@
 <template>
-  <draggable v-model="cards" group="cards" class="row">
+  <draggable :list="cards" group="cards" class="row" @change="onDragCard">
     <v-col v-for="(card, i) in cards" :key="i" cols="12" sm="6" md="4">
       <v-card outlined>
         <v-card-actions>
@@ -86,6 +86,16 @@ export default {
     cards: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    async onDragCard(event) {
+      if (event.moved) {
+        const cardIds = this.cards.map((c) => c.id)
+        const result = await this.$axios.$put(`cards/reorder`, { cardIds })
+
+        this.$nuxt.$emit('card-moved', result)
+      }
     },
   },
 }

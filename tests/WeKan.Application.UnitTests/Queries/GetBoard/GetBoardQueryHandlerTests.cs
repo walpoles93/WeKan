@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +64,36 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
             Assert.NotNull(dtoCard.Activities);
             Assert.Single(dtoCard.Activities);
             Assert.Equal(1, dtoActivity.Id);
+        }
+
+        [Fact]
+        public async Task Handle_BoardIdExists_ReturnsCardsInOrder()
+        {
+            var dbName = $"{nameof(GetBoardQueryHandlerTests)}_{nameof(Handle_BoardIdExists_ReturnsCardsInOrder)}";
+            using var context = TestApplicationDbContext.Create(dbName);
+            var cancellationToken = new CancellationToken();
+
+            var board = Board.Create("board-title");
+            var card1 = Card.Create("card1-title", 1);
+            var card2 = Card.Create("card2-title", 0);
+            board.AddCard(card1);
+            board.AddCard(card2);
+            context.Boards.Add(board);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var orderedCardIds = await context.Cards
+                .Where(c => c.BoardId == board.Id)
+                .OrderBy(c => c.Order)
+                .Select(c => c.Id)
+                .ToListAsync(cancellationToken);
+
+            var handler = new GetBoardQueryHandler(context);
+            var request = new GetBoardQuery(1);
+
+            var dto = await handler.Handle(request, cancellationToken);
+            var dtoCardIds = dto.Cards.Select(c => c.Id).ToList();
+
+            Assert.Equal(orderedCardIds, dtoCardIds);
         }
     }
 }
