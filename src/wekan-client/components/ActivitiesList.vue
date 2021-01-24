@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <draggable v-model="activities" group="activities" class="row">
     <v-col v-for="(activity, j) in activities" :key="j" cols="12">
       <v-card outlined>
         <v-card-text>
@@ -31,25 +31,37 @@
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12">
-      <create-edit-actvity-dialog :card-id="cardId">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn depressed block tile color="primary" v-bind="attrs" v-on="on">
-            <v-icon left>mdi-plus</v-icon>
-            Create Activity
-          </v-btn>
-        </template>
-      </create-edit-actvity-dialog>
-    </v-col>
-  </v-row>
+
+    <template v-slot:footer>
+      <v-col cols="12">
+        <create-edit-actvity-dialog :card-id="cardId">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              depressed
+              block
+              tile
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon left>mdi-plus</v-icon>
+              Create Activity
+            </v-btn>
+          </template>
+        </create-edit-actvity-dialog>
+      </v-col>
+    </template>
+  </draggable>
 </template>
 
 <script>
+import Draggable from 'vuedraggable'
 import CreateEditActvityDialog from '~/components/CreateEditActivityDialog'
 import DeleteActivityDialog from '~/components/DeleteActivityDialog'
 
 export default {
   components: {
+    Draggable,
     CreateEditActvityDialog,
     DeleteActivityDialog,
   },
