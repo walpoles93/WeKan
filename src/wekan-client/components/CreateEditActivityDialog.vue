@@ -1,15 +1,14 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn depressed block tile color="primary" v-bind="attrs" v-on="on">
-        <v-icon left>mdi-plus</v-icon>
-        Create Activity
-      </v-btn>
+      <slot name="activator" :on="on" :attrs="attrs"></slot>
     </template>
 
     <v-card>
       <v-card-title>
-        <span class="headline">Create Activity</span>
+        <span class="headline">
+          {{ isCreate ? 'Create Activity' : 'Edit Activity' }}
+        </span>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
@@ -35,7 +34,7 @@
           color="primary"
           :loading="isSaving"
           :disabled="!valid"
-          @click="onClickSave"
+          @click="() => (isCreate ? create() : edit())"
         >
           Save
         </v-btn>
@@ -51,17 +50,45 @@ export default {
       type: Number,
       required: true,
     },
+    id: {
+      type: Number,
+      default: 0,
+    },
+    title: {
+      type: String,
+      default: '',
+    },
   },
   data: () => ({
     dialog: false,
     valid: false,
     isSaving: false,
     activity: {
+      activityId: 0,
       title: '',
     },
   }),
+  computed: {
+    isCreate() {
+      return !this.id
+    },
+  },
+  watch: {
+    id: {
+      handler(newId) {
+        this.activity.activityId = newId
+      },
+      immediate: true,
+    },
+    title: {
+      handler(newTitle) {
+        this.activity.title = newTitle
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    async onClickSave() {
+    async create() {
       this.isSaving = true
 
       const result = await this.$axios.$post('activities', {
@@ -69,6 +96,18 @@ export default {
         cardId: this.cardId,
       })
       this.$nuxt.$emit('activity-created', result)
+
+      this.isSaving = false
+      this.dialog = false
+    },
+    async edit() {
+      this.isSaving = true
+
+      const result = await this.$axios.$put('activities', {
+        ...this.activity,
+        cardId: this.cardId,
+      })
+      this.$nuxt.$emit('activity-edited', result)
 
       this.isSaving = false
       this.dialog = false

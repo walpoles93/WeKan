@@ -89,6 +89,8 @@ export default {
       this.$nuxt.$on('card-deleted', () => this.getBoard(this.boardId))
 
       this.$nuxt.$on('activity-created', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('activity-edited', () => this.getBoard(this.boardId))
+      this.$nuxt.$on('activity-deleted', () => this.getBoard(this.boardId))
 
       this.$nuxt.$on('board-edited', () => this.getBoard(this.boardId))
       this.$nuxt.$on('board-deleted', () =>

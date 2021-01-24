@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col v-for="(card, i) in cards" :key="i" cols="12" sm="6" md="4" lg="3">
+    <v-col v-for="(card, i) in cards" :key="i" cols="12" sm="6" md="4">
       <v-card outlined>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -37,7 +37,7 @@
       </v-card>
     </v-col>
 
-    <v-col cols="12" sm="6" md="4" lg="3">
+    <v-col cols="12" sm="6" md="4">
       <create-edit-card-dialog :board-id="boardId">
         <template v-slot:activator="{ on, attrs }">
           <v-hover v-slot="{ hover }">
