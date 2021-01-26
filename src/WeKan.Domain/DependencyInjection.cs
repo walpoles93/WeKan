@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 using WeKan.Domain.Activities;
+using WeKan.Domain.Boards;
 using WeKan.Domain.Cards;
 
 [assembly: InternalsVisibleTo("WeKan.Domain.UnitTests")]
@@ -18,6 +19,8 @@ namespace WeKan.Domain
         {
             services.AddTransient<ICardService, CardService>();
             services.AddTransient<IActivityService, ActivityService>();
+            services.AddTransient<IBoardUserFactory, BoardUserFactory>();
+            services.AddTransient<IBoardUserPermissionService, BoardUserPermissionService>();
 
             return services;
         }
