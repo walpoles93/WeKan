@@ -38,15 +38,5 @@ namespace WeKan.Infrastructure.Persistance
 
             return base.SaveChangesAsync(cancellationToken);
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            var currentUserId = _currentUser.UserId;
-            modelBuilder.Entity<Board>().HasQueryFilter(b => b.CreatedByUserId == currentUserId);
-            modelBuilder.Entity<Card>().HasQueryFilter(b => b.CreatedByUserId == currentUserId);
-            modelBuilder.Entity<Activity>().HasQueryFilter(b => b.CreatedByUserId == currentUserId);
-        }
     }
 }
