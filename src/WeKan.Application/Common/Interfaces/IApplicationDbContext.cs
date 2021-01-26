@@ -12,6 +12,7 @@ namespace WeKan.Application.Common.Interfaces
         DbSet<Board> Boards { get; }
         DbSet<Card> Cards { get; }
         DbSet<Activity> Activities { get; }
+        DbSet<BoardUser> BoardUsers { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

@@ -23,6 +23,7 @@ namespace WeKan.Infrastructure.Persistance
         public DbSet<Board> Boards { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<BoardUser> BoardUsers { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
