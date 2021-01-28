@@ -14,6 +14,7 @@ using WeKan.Application.Commands.ReorderActivities;
 using WeKan.Application.Commands.ReorderCards;
 using WeKan.Application.Common.Behaviours;
 using WeKan.Application.Common.Interfaces;
+using WeKan.Application.Queries.GetBoard;
 
 namespace WeKan.Application
 {
@@ -47,7 +48,8 @@ namespace WeKan.Application
                 .AddTransient<IAuthorizer<EditCardCommand>, EditCardAuthorizer>()
                 .AddTransient<IAuthorizer<MoveActivityToCardCommand>, MoveActivityToCardAuthorizer>()
                 .AddTransient<IAuthorizer<ReorderActivitiesCommand>, ReorderActivitiesAuthorizer>()
-                .AddTransient<IAuthorizer<ReorderCardsCommand>, ReorderCardsAuthorizer>();
+                .AddTransient<IAuthorizer<ReorderCardsCommand>, ReorderCardsAuthorizer>()
+                .AddTransient<IAuthorizer<GetBoardQuery>, GetBoardAuthorizer>();
         }
     }
 }
