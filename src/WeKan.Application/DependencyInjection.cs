@@ -14,6 +14,7 @@ using WeKan.Application.Commands.ReorderActivities;
 using WeKan.Application.Commands.ReorderCards;
 using WeKan.Application.Common.Behaviours;
 using WeKan.Application.Common.Interfaces;
+using WeKan.Application.Common.Services;
 using WeKan.Application.Queries.GetBoard;
 
 namespace WeKan.Application
@@ -24,10 +25,11 @@ namespace WeKan.Application
         {
             return services
                 .AddMediator()
-                .AddAuthorizers();
+                .AddAuthorizers()
+                .AddServices();
         }
 
-        public static IServiceCollection AddMediator(this IServiceCollection services)
+        private static IServiceCollection AddMediator(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
@@ -35,7 +37,7 @@ namespace WeKan.Application
             return services;
         }
 
-        public static IServiceCollection AddAuthorizers(this IServiceCollection services)
+        private static IServiceCollection AddAuthorizers(this IServiceCollection services)
         {
             return services
                 .AddTransient<IAuthorizer<AddActivityToCardCommand>, AddActivityToCardAuthorizer>()
@@ -50,6 +52,12 @@ namespace WeKan.Application
                 .AddTransient<IAuthorizer<ReorderActivitiesCommand>, ReorderActivitiesAuthorizer>()
                 .AddTransient<IAuthorizer<ReorderCardsCommand>, ReorderCardsAuthorizer>()
                 .AddTransient<IAuthorizer<GetBoardQuery>, GetBoardAuthorizer>();
+        }
+
+        private static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            return services
+                .AddTransient<ICurrentUserPermissionService, CurrentUserPermissionService>();
         }
     }
 }
