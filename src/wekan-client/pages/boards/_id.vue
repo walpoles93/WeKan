@@ -31,7 +31,11 @@
             <v-row align="center" class="px-3">
               <h1>{{ board.title }}</h1>
               <v-spacer></v-spacer>
-              <create-edit-board-dialog :id="boardId" :title="board.title">
+              <create-edit-board-dialog
+                v-if="isOwner"
+                :id="boardId"
+                :title="board.title"
+              >
                 <template v-slot:activator="{ on, attr }">
                   <v-btn icon v-bind="attr" small v-on="on">
                     <v-icon>mdi-pencil-outline</v-icon>
@@ -73,12 +77,16 @@ export default {
     board: {
       title: '',
       accessCode: '',
+      boardUserType: '',
       cards: [],
     },
   }),
   computed: {
     boardId() {
       return (this.$route.params && Number(this.$route.params.id)) || 0
+    },
+    isOwner() {
+      return this.board.boardUserType === 'owner'
     },
   },
   async mounted() {

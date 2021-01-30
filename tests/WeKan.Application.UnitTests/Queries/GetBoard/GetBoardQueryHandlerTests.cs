@@ -130,5 +130,30 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
 
             Assert.Equal(orderedActivityIds, dtoActivityIds);
         }
+
+        [Fact]
+        public async Task Handle_BoardIdExists_ReturnsBoardUserType()
+        {
+            var dbName = $"{nameof(GetBoardQueryHandlerTests)}_{nameof(Handle_BoardIdExists_ReturnsBoardUserType)}";
+            using var context = TestApplicationDbContext.Create(dbName);
+            var cancellationToken = new CancellationToken();
+
+            var boardFactory = new BoardFactory();
+            var boardUserFactory = new BoardUserFactory();
+            var userId = "user-id";
+            var board = boardFactory.Create("board-title");
+            var boardUser = boardUserFactory.CreateOwner(1, userId);
+            var boardUserType = boardUser.Type.ToString().ToLower();
+            context.Boards.Add(board);
+            context.BoardUsers.Add(boardUser);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var handler = new GetBoardQueryHandler(context);
+            var request = new GetBoardQuery(1);
+
+            var dto = await handler.Handle(request, cancellationToken);
+
+            Assert.Equal(boardUserType, dto.BoardUserType);
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace WeKan.Application.Queries.GetBoard
         public int Id { get; set; }
         public string Title { get; set; }
         public string AccessCode { get; set; }
+        public string BoardUserType { get; set; }
         public IEnumerable<Card> Cards { get; set; }
         public string CreatedByUserId { get; set; }
 

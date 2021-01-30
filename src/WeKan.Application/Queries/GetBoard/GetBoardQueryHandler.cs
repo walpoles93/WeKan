@@ -24,6 +24,12 @@ namespace WeKan.Application.Queries.GetBoard
 
             if (board is null) throw new NotFoundApplicationException($"Could not find board with Id: {request.BoardId}");
 
+            var boardUserType = await _dbContext.BoardUsers
+                .Where(bu => bu.BoardId == request.BoardId)
+                .Select(bu => bu.Type.ToString().ToLower())
+                .FirstOrDefaultAsync(cancellationToken);
+            board.BoardUserType = boardUserType;
+
             return board;
         }
 
