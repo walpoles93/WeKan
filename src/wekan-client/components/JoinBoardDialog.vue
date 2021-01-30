@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="600px">
+  <v-dialog v-model="dialog" max-width="600px" hide-overlay>
     <template v-slot:activator="{ on, attr }">
       <slot name="activator" :on="on" :attr="attr"></slot>
     </template>
