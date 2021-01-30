@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WeKan.Application.Commands.CreateBoard;
 using WeKan.Application.Commands.DeleteBoard;
 using WeKan.Application.Commands.EditBoard;
+using WeKan.Application.Commands.JoinBoard;
 using WeKan.Application.Queries.GetBoard;
 using WeKan.Application.Queries.GetBoardsList;
 
@@ -34,6 +35,9 @@ namespace WeKan.API.Controllers
 
         [HttpPut]
         public async Task<Unit> EditBoard(EditBoardCommand command) => await _mediator.Send(command);
+
+        [HttpPut("Join")]
+        public async Task<Unit> JoinBoard(JoinBoardCommand command) => await _mediator.Send(command);
 
         [HttpDelete("{boardId:int}")]
         public async Task<Unit> DeleteBoard(int boardId) => await _mediator.Send(new DeleteBoardCommand(boardId));
