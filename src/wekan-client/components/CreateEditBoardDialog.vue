@@ -27,6 +27,13 @@
         </v-form>
       </v-card-text>
       <v-card-actions>
+        <delete-board-dialog v-if="!isCreate" :id="id">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn outlined color="error" v-bind="attrs" v-on="on">
+              Delete
+            </v-btn>
+          </template>
+        </delete-board-dialog>
         <v-spacer></v-spacer>
         <v-btn text @click="dialog = false"> Close </v-btn>
         <v-btn
@@ -44,7 +51,12 @@
 </template>
 
 <script>
+import DeleteBoardDialog from '~/components/DeleteBoardDialog'
+
 export default {
+  components: {
+    DeleteBoardDialog,
+  },
   props: {
     id: {
       type: Number,

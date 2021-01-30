@@ -24,13 +24,6 @@
                   </v-btn>
                 </template>
               </create-edit-activity-dialog>
-              <delete-activity-dialog :id="activity.id">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon color="error" small v-bind="attrs" v-on="on">
-                    <v-icon>mdi-delete-outline</v-icon>
-                  </v-btn>
-                </template>
-              </delete-activity-dialog>
             </v-col>
           </v-row>
         </v-card-text>
@@ -62,13 +55,10 @@
 <script>
 import Draggable from 'vuedraggable'
 import CreateEditActvityDialog from '~/components/CreateEditActivityDialog'
-import DeleteActivityDialog from '~/components/DeleteActivityDialog'
-
 export default {
   components: {
     Draggable,
     CreateEditActvityDialog,
-    DeleteActivityDialog,
   },
   props: {
     cardId: {

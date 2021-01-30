@@ -2,7 +2,8 @@
   <draggable :list="cards" group="cards" class="row" @change="onDragCard">
     <v-col v-for="(card, i) in cards" :key="i" cols="12" sm="6" md="4">
       <v-card outlined>
-        <v-card-actions>
+        <v-card-title>
+          <h2>{{ card.title }}</h2>
           <v-spacer></v-spacer>
           <create-edit-card-dialog
             :id="card.id"
@@ -15,17 +16,6 @@
               </v-btn>
             </template>
           </create-edit-card-dialog>
-          <delete-card-dialog :id="card.id">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon color="error" small v-bind="attrs" v-on="on">
-                <v-icon>mdi-delete-outline</v-icon>
-              </v-btn>
-            </template>
-          </delete-card-dialog>
-        </v-card-actions>
-
-        <v-card-title>
-          <h2>{{ card.title }}</h2>
         </v-card-title>
 
         <v-card-text>
@@ -68,14 +58,12 @@
 <script>
 import Draggable from 'vuedraggable'
 import CreateEditCardDialog from '~/components/CreateEditCardDialog'
-import DeleteCardDialog from '~/components/DeleteCardDialog'
 import ActivitiesList from '~/components/ActivitiesList'
 
 export default {
   components: {
     Draggable,
     CreateEditCardDialog,
-    DeleteCardDialog,
     ActivitiesList,
   },
   props: {
