@@ -9,31 +9,43 @@ namespace WeKan.Domain.UnitTests.Boards
     public class BoardTests
     {
         [Fact]
-        public void Create_TitleLengthGreaterThanZero_ReturnsBoard()
+        public void Ctor_TitleLengthGreaterThanZero_ReturnsBoard()
         {
             var title = "test-title";
-            var board = Board.Create(title);
+            var accessCode = "accessCode";
+            var board = new Board(title, accessCode);
 
             Assert.IsType<Board>(board);
             Assert.NotNull(board);
             Assert.Equal(title, board.Title);
+            Assert.Equal(accessCode, board.AccessCode);
         }
 
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void Create_TitleNullOrEmpty_ThrowsArgumentException(string title)
+        public void Ctor_TitleNullOrEmpty_ThrowsArgumentException(string title)
         {
-            Board action() => Board.Create(title);
+            Board action() => new Board(title, "accessCode");
+
+            Assert.Throws<ArgumentException>(action);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void Ctor_AccessCodeNullOrEmpty_ThrowsArgumentException(string accessCode)
+        {
+            Board action() => new Board("title", accessCode);
 
             Assert.Throws<ArgumentException>(action);
         }
 
         [Fact]
-        public void Create_CardsCollectionIsEmpty()
+        public void Ctor_CardsCollectionIsEmpty()
         {
             var title = "test-title";
-            var board = Board.Create(title);
+            var board = new Board(title, "accessCode");
 
             Assert.NotNull(board.Cards);
             Assert.Empty(board.Cards);
@@ -44,7 +56,7 @@ namespace WeKan.Domain.UnitTests.Boards
         {
             var oldTitle = "old-title";
             var newTitle = "new-title";
-            var board = Board.Create(oldTitle);
+            var board = new Board(oldTitle, "accessCode");
 
             board.ChangeTitle(newTitle);
 
@@ -57,7 +69,7 @@ namespace WeKan.Domain.UnitTests.Boards
         public void ChangeTitle_TitleNullOrEmpty_ThrowsArgumentException(string newTitle)
         {
             var oldTitle = "old-title";
-            var board = Board.Create(oldTitle);
+            var board = new Board(oldTitle, "accessCode");
 
             void action() => board.ChangeTitle(newTitle);
 
@@ -69,7 +81,7 @@ namespace WeKan.Domain.UnitTests.Boards
         {
             var card = Card.Create("card-title");
             var title = "test-title";
-            var board = Board.Create(title);
+            var board = new Board(title, "accessCode");
 
             board.AddCard(card);
 
@@ -82,7 +94,7 @@ namespace WeKan.Domain.UnitTests.Boards
         {
             Card card = null;
             var title = "test-title";
-            var board = Board.Create(title);
+            var board = new Board(title, "accessCode");
 
             void action() => board.AddCard(card);
 

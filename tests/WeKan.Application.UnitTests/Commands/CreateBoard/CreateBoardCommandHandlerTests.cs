@@ -22,7 +22,7 @@ namespace WeKan.Application.UnitTests.Commands.CreateBoard
         [Fact]
         public void Ctor_IApplicationDbContextNull_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(null, _currentUser.Object, new BoardUserFactory()));
+            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(null, _currentUser.Object, new BoardFactory(), new BoardUserFactory()));
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace WeKan.Application.UnitTests.Commands.CreateBoard
             var dbName = $"{nameof(CreateBoardCommandHandlerTests)}_{nameof(Ctor_IBoardUserFactoryNull_ThrowsArgumentNullException)}";
             using var context = TestApplicationDbContext.Create(dbName);
 
-            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(context, _currentUser.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(context, _currentUser.Object, new BoardFactory(), null));
         }
 
         [Fact]
@@ -40,7 +40,16 @@ namespace WeKan.Application.UnitTests.Commands.CreateBoard
             var dbName = $"{nameof(CreateBoardCommandHandlerTests)}_{nameof(Ctor_ICurrentUserNull_ThrowsArgumentNullException)}";
             using var context = TestApplicationDbContext.Create(dbName);
 
-            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(context, null, new BoardUserFactory()));
+            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(context, null, new BoardFactory(), new BoardUserFactory()));
+        }
+
+        [Fact]
+        public void Ctor_IBoardFactory_ThrowsArgumentNullException()
+        {
+            var dbName = $"{nameof(CreateBoardCommandHandlerTests)}_{nameof(Ctor_IBoardFactory_ThrowsArgumentNullException)}";
+            using var context = TestApplicationDbContext.Create(dbName);
+
+            Assert.Throws<ArgumentNullException>(() => new CreateBoardCommandHandler(context, _currentUser.Object, null, new BoardUserFactory()));
         }
 
         [Fact]
@@ -48,7 +57,7 @@ namespace WeKan.Application.UnitTests.Commands.CreateBoard
         {
             var dbName = $"{nameof(CreateBoardCommandHandlerTests)}_{nameof(Handle_CreatesBoard)}";
             using var context = TestApplicationDbContext.Create(dbName);
-            var handler = new CreateBoardCommandHandler(context, _currentUser.Object, new BoardUserFactory());
+            var handler = new CreateBoardCommandHandler(context, _currentUser.Object, new BoardFactory(), new BoardUserFactory());
             var request = new CreateBoardCommand { Title = "test-title" };
             var cancellationToken = new CancellationToken();
 
@@ -67,7 +76,7 @@ namespace WeKan.Application.UnitTests.Commands.CreateBoard
             using var context = TestApplicationDbContext.Create(dbName);
             var userId = "user-id";
             _currentUser.Setup(u => u.UserId).Returns(userId);
-            var handler = new CreateBoardCommandHandler(context, _currentUser.Object, new BoardUserFactory());
+            var handler = new CreateBoardCommandHandler(context, _currentUser.Object, new BoardFactory(), new BoardUserFactory());
             var request = new CreateBoardCommand { Title = "test-title" };
             var cancellationToken = new CancellationToken();
 
@@ -86,7 +95,7 @@ namespace WeKan.Application.UnitTests.Commands.CreateBoard
         {
             var dbName = $"{nameof(CreateBoardCommandHandlerTests)}_{nameof(Handle_ReturnsBoardCreatedDtoWithCorrectBoardId)}";
             using var context = TestApplicationDbContext.Create(dbName);
-            var handler = new CreateBoardCommandHandler(context, _currentUser.Object, new BoardUserFactory());
+            var handler = new CreateBoardCommandHandler(context, _currentUser.Object, new BoardFactory(), new BoardUserFactory());
             var request = new CreateBoardCommand { Title = "test-title" };
             var cancellationToken = new CancellationToken();
 

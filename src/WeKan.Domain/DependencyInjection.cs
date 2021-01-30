@@ -19,6 +19,7 @@ namespace WeKan.Domain
         {
             services.AddTransient<ICardService, CardService>();
             services.AddTransient<IActivityService, ActivityService>();
+            services.AddTransient<IBoardFactory, BoardFactory>();
             services.AddTransient<IBoardUserFactory, BoardUserFactory>();
             services.AddTransient<IBoardUserPermissionService, BoardUserPermissionService>();
 

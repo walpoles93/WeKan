@@ -37,7 +37,8 @@ namespace WeKan.Infrastructure.UnitTests.Persistance
             using var context = CreateContext(dbName, _currentUser.Object);
             var cancellationToken = new CancellationToken();
 
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             context.Boards.Add(board);
 
             await context.SaveChangesAsync(cancellationToken);

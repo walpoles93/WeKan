@@ -11,18 +11,24 @@ namespace WeKan.Application.Commands.CreateBoard
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ICurrentUser _currentUser;
+        private readonly IBoardFactory _boardFactory;
         private readonly IBoardUserFactory _boardUserFactory;
 
-        public CreateBoardCommandHandler(IApplicationDbContext dbContext, ICurrentUser currentUser, IBoardUserFactory boardUserFactory)
+        public CreateBoardCommandHandler(
+            IApplicationDbContext dbContext,
+            ICurrentUser currentUser,
+            IBoardFactory boardFactory,
+            IBoardUserFactory boardUserFactory)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
+            _boardFactory = boardFactory ?? throw new ArgumentNullException(nameof(boardFactory));
             _boardUserFactory = boardUserFactory ?? throw new ArgumentNullException(nameof(_boardUserFactory));
         }
 
         public async Task<BoardCreatedDto> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
         {
-            var board = Board.Create(request.Title);
+            var board = _boardFactory.Create(request.Title);
             _dbContext.Boards.Add(board);
             await _dbContext.SaveChangesAsync(cancellationToken);
 

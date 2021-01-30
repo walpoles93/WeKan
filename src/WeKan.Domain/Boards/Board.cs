@@ -7,18 +7,19 @@ namespace WeKan.Domain.Boards
 {
     public class Board : Entity
     {
-        public static Board Create(string title) => new Board(title);
-
-        private Board(string title)
+        internal Board(string title, string accessCode)
         {
             if (string.IsNullOrEmpty(title)) throw new ArgumentException(nameof(title));
+            if (string.IsNullOrEmpty(accessCode)) throw new ArgumentException(nameof(accessCode));
 
             Title = title;
+            AccessCode = accessCode;
         }
 
         private Board() { }
 
         public string Title { get; private set; } = string.Empty;
+        public string AccessCode { get; private set; } = string.Empty;
 
         private readonly List<Card> _cards = new List<Card>();
         public IReadOnlyCollection<Card> Cards => _cards;

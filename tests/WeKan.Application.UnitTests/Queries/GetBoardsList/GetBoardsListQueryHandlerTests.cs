@@ -58,8 +58,9 @@ namespace WeKan.Application.UnitTests.Queries.GetBoardsList
 
             _currentUser.Setup(u => u.UserId).Returns(userId);
 
-            var board1 = Board.Create("board1-title");
-            var board2 = Board.Create("board2-title");
+            var boardFactory = new BoardFactory();
+            var board1 = boardFactory.Create("board1-title");
+            var board2 = boardFactory.Create("board2-title");
             var boardUser = factory.CreateOwner(1, userId);
             context.Boards.AddRange(board1, board2);
             context.BoardUsers.Add(boardUser);

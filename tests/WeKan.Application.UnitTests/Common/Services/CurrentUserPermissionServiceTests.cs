@@ -65,7 +65,8 @@ namespace WeKan.Application.UnitTests.Common.Services
             var dbName = $"{nameof(CurrentUserPermissionServiceTests)}_{nameof(HasPermissionForActivity_BoardUserNotExists_ReturnFalse)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card = Card.Create("card-title");
             var activity = Activity.Create("activity-title");
             board.AddCard(card);
@@ -93,7 +94,8 @@ namespace WeKan.Application.UnitTests.Common.Services
             var dbName = $"{nameof(CurrentUserPermissionServiceTests)}_{nameof(HasPermissionForActivity_BoardUserExists_ReturnOutputOfIBoardUserPermissionService)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card = Card.Create("card-title");
             var activity = Activity.Create("activity-title");
             var boardUser = new BoardUserFactory().CreateOwner(1, userId);
@@ -128,7 +130,8 @@ namespace WeKan.Application.UnitTests.Common.Services
             var dbName = $"{nameof(CurrentUserPermissionServiceTests)}_{nameof(HasPermissionForCard_BoardUserNotExists_ReturnFalse)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card = Card.Create("card-title");
             board.AddCard(card);
             context.Boards.Add(board);
@@ -154,7 +157,8 @@ namespace WeKan.Application.UnitTests.Common.Services
             var dbName = $"{nameof(CurrentUserPermissionServiceTests)}_{nameof(HasPermissionForCard_BoardUserExists_ReturnOutputOfIBoardUserPermissionService)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card = Card.Create("card-title");
             var boardUser = new BoardUserFactory().CreateOwner(1, userId);
             board.AddCard(card);
@@ -187,7 +191,8 @@ namespace WeKan.Application.UnitTests.Common.Services
             var dbName = $"{nameof(CurrentUserPermissionServiceTests)}_{nameof(HasPermissionForBoard_BoardUserNotExists_ReturnFalse)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             context.Boards.Add(board);
             await context.SaveChangesAsync(cancellationToken);
 
@@ -211,7 +216,8 @@ namespace WeKan.Application.UnitTests.Common.Services
             var dbName = $"{nameof(CurrentUserPermissionServiceTests)}_{nameof(HasPermissionForBoard_BoardUserExists_ReturnOutputOfIBoardUserPermissionService)}";
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var boardUser = new BoardUserFactory().CreateOwner(1, userId);
             context.Boards.Add(board);
             context.BoardUsers.Add(boardUser);

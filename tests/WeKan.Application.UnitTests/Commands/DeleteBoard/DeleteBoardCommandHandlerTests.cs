@@ -39,7 +39,8 @@ namespace WeKan.Application.UnitTests.Commands.DeleteBoard
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
 
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             context.Boards.Add(board);
             await context.SaveChangesAsync(cancellationToken);
 

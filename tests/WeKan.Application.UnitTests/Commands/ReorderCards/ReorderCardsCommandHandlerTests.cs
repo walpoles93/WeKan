@@ -55,8 +55,9 @@ namespace WeKan.Application.UnitTests.Commands.ReorderCards
             var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
 
-            var board1 = Board.Create("board1-title");
-            var board2 = Board.Create("board2-title");
+            var boardFactory = new BoardFactory();
+            var board1 = boardFactory.Create("board1-title");
+            var board2 = boardFactory.Create("board2-title");
             var card1 = Card.Create("card1-title");
             var card2 = Card.Create("card2-title");
             board1.AddCard(card1);
@@ -79,7 +80,8 @@ namespace WeKan.Application.UnitTests.Commands.ReorderCards
             var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
 
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card1 = Card.Create("card1-title");
             var card2 = Card.Create("card2-title");
             board.AddCard(card1);

@@ -22,7 +22,8 @@ namespace WeKan.Application.UnitTests.Commands.AddCardToBoard
         {
             var dbName = $"{nameof(AddCardToBoardCommandHandlerTests)}_{nameof(Handle_BoardExists_AddsActivityToCard)}";
             using var context = TestApplicationDbContext.Create(dbName);
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var cancellationToken = new CancellationToken();
 
             context.Boards.Add(board);
@@ -59,7 +60,8 @@ namespace WeKan.Application.UnitTests.Commands.AddCardToBoard
         {
             var dbName = $"{nameof(AddCardToBoardCommandHandlerTests)}_{nameof(Handle_BoardExists_ReturnsCardCreatedDtoWithCorrectPropValues)}";
             using var context = TestApplicationDbContext.Create(dbName);
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var cancellationToken = new CancellationToken();
 
             context.Boards.Add(board);

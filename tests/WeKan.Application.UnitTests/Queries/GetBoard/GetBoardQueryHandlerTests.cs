@@ -41,7 +41,8 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
 
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card = Card.Create("card-title");
             var activity = Activity.Create("activity-title");
             board.AddCard(card);
@@ -73,7 +74,8 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
 
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card1 = Card.Create("card1-title", 1);
             var card2 = Card.Create("card2-title", 0);
             board.AddCard(card1);
@@ -103,7 +105,8 @@ namespace WeKan.Application.UnitTests.Queries.GetBoard
             using var context = TestApplicationDbContext.Create(dbName);
             var cancellationToken = new CancellationToken();
 
-            var board = Board.Create("board-title");
+            var boardFactory = new BoardFactory();
+            var board = boardFactory.Create("board-title");
             var card = Card.Create("card1-title");
             var activity1 = Activity.Create("activity1-title", 1);
             var activity2 = Activity.Create("activity2-title", 0);
