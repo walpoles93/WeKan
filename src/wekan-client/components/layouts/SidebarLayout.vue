@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app>
+    <v-app-bar v-if="!isMdAndUp" app flat color="white">
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" app :permanent="isMdAndUp">
       <slot name="sidebar"></slot>
     </v-navigation-drawer>
 
@@ -22,5 +26,10 @@ export default {
   data: () => ({
     drawer: null,
   }),
+  computed: {
+    isMdAndUp() {
+      return this.$vuetify.breakpoint.mdAndUp
+    },
+  },
 }
 </script>

@@ -2,9 +2,7 @@
   <v-row>
     <v-col>
       <v-sheet class="pa-4">
-        <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
-
-        <div>username</div>
+        <h2>Boards</h2>
       </v-sheet>
 
       <v-divider></v-divider>
