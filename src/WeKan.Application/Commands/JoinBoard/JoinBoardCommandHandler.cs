@@ -10,7 +10,7 @@ using WeKan.Domain.Boards;
 
 namespace WeKan.Application.Commands.JoinBoard
 {
-    public class JoinBoardCommandHandler : IRequestHandler<JoinBoardCommand>
+    public class JoinBoardCommandHandler : IRequestHandler<JoinBoardCommand, BoardJoinedDto>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ICurrentUser _currentUser;
@@ -23,7 +23,7 @@ namespace WeKan.Application.Commands.JoinBoard
             _boardUserFactory = boardUserFactory ?? throw new ArgumentNullException(nameof(boardUserFactory));
         }
 
-        public async Task<Unit> Handle(JoinBoardCommand request, CancellationToken cancellationToken)
+        public async Task<BoardJoinedDto> Handle(JoinBoardCommand request, CancellationToken cancellationToken)
         {
             var boardId = await _dbContext.Boards
                 .Where(b => b.AccessCode == request.AccessCode)
@@ -36,7 +36,7 @@ namespace WeKan.Application.Commands.JoinBoard
             _dbContext.BoardUsers.Add(boardUser);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new BoardJoinedDto { BoardId = boardId };
 
         }
     }

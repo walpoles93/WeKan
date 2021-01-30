@@ -45,6 +45,13 @@
                   </v-btn>
                 </template>
               </delete-board-dialog>
+              <share-board-dialog :access-code="board.accessCode">
+                <template v-slot:activator="{ on, attr }">
+                  <v-btn icon v-bind="attr" v-on="on">
+                    <v-icon>mdi-share-variant-outline</v-icon>
+                  </v-btn>
+                </template>
+              </share-board-dialog>
             </v-row>
             <cards-grid :board-id="boardId" :cards="board.cards"></cards-grid>
           </v-col>
@@ -59,6 +66,7 @@ import SidebarLayout from '~/components/layouts/SidebarLayout'
 import AppSidebar from '~/components/AppSidebar'
 import CreateEditBoardDialog from '~/components/CreateEditBoardDialog'
 import DeleteBoardDialog from '~/components/DeleteBoardDialog'
+import ShareBoardDialog from '~/components/ShareBoardDialog'
 import CardsGrid from '~/components/CardsGrid'
 
 export default {
@@ -67,11 +75,13 @@ export default {
     AppSidebar,
     CreateEditBoardDialog,
     DeleteBoardDialog,
+    ShareBoardDialog,
     CardsGrid,
   },
   data: () => ({
     board: {
       title: '',
+      accessCode: '',
       cards: [],
     },
   }),

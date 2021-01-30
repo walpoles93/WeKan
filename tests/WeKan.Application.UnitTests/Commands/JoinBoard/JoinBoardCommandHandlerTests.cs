@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Threading;
@@ -54,7 +53,7 @@ namespace WeKan.Application.UnitTests.Commands.JoinBoard
             var command = new JoinBoardCommand { AccessCode = "accessCode" };
             var cancellationToken = new CancellationToken();
 
-            Task<Unit> action() => handler.Handle(command, cancellationToken);
+            Task<BoardJoinedDto> action() => handler.Handle(command, cancellationToken);
 
             await Assert.ThrowsAsync<NotFoundApplicationException>(action);
         }
@@ -75,12 +74,13 @@ namespace WeKan.Application.UnitTests.Commands.JoinBoard
 
             var handler = new JoinBoardCommandHandler(context, _currentUser.Object, new BoardUserFactory());
             var command = new JoinBoardCommand { AccessCode = board.AccessCode };
-            await handler.Handle(command, cancellationToken);
+            var dto = await handler.Handle(command, cancellationToken);
 
             var boardUser = await context.BoardUsers
                 .FirstOrDefaultAsync(bu => bu.BoardId == board.Id && bu.UserId == userId);
 
             Assert.NotNull(boardUser);
+            Assert.Equal(board.Id, dto.BoardId);
         }
     }
 }

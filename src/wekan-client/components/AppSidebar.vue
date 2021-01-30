@@ -35,16 +35,34 @@
           </v-btn>
         </template>
       </create-edit-board-dialog>
+      <join-board-dialog>
+        <template v-slot:activator="{ on, attr }">
+          <v-btn
+            depressed
+            block
+            tile
+            color="secondary"
+            v-bind="attr"
+            class="mt-1"
+            v-on="on"
+          >
+            <v-icon left>mdi-account-group-outline</v-icon>
+            Join Board
+          </v-btn>
+        </template>
+      </join-board-dialog>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import CreateEditBoardDialog from '~/components/CreateEditBoardDialog'
+import JoinBoardDialog from '~/components/JoinBoardDialog'
 
 export default {
   components: {
     CreateEditBoardDialog,
+    JoinBoardDialog,
   },
   data: () => ({
     boards: [],

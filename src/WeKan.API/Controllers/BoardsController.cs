@@ -37,7 +37,7 @@ namespace WeKan.API.Controllers
         public async Task<Unit> EditBoard(EditBoardCommand command) => await _mediator.Send(command);
 
         [HttpPut("Join")]
-        public async Task<Unit> JoinBoard(JoinBoardCommand command) => await _mediator.Send(command);
+        public async Task<BoardJoinedDto> JoinBoard(JoinBoardCommand command) => await _mediator.Send(command);
 
         [HttpDelete("{boardId:int}")]
         public async Task<Unit> DeleteBoard(int boardId) => await _mediator.Send(new DeleteBoardCommand(boardId));
