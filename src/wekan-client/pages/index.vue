@@ -89,5 +89,6 @@ export default {
     Logo,
     VuetifyLogo,
   },
+  layout: 'index',
 }
 </script>

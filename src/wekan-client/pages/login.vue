@@ -8,7 +8,7 @@ export default {
     if (!this.$auth.loggedIn) {
       await this.$auth.loginWith('auth0')
     } else {
-      this.$router.push({ name: 'index' })
+      this.$router.push({ name: 'boards-id' })
     }
   },
 }

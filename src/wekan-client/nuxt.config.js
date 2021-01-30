@@ -52,10 +52,6 @@ export default {
     baseURL: 'https://localhost:44360',
   },
 
-  router: {
-    middleware: ['auth'],
-  },
-
   auth: {
     strategies: {
       auth0: {
@@ -63,6 +59,9 @@ export default {
         client_id: process.env.AUTHENTICATION_CLIENT_ID,
         audience: process.env.AUTHENTICATION_AUDIENCE,
       },
+    },
+    redirect: {
+      home: '/boards',
     },
   },
 

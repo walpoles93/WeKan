@@ -6,6 +6,14 @@
 
     <v-navigation-drawer v-model="drawer" app :permanent="isMdAndUp">
       <slot name="sidebar"></slot>
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn block depressed @click="logout">
+            <v-icon left>mdi-logout</v-icon>
+            Logout
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <v-main>
@@ -29,6 +37,12 @@ export default {
   computed: {
     isMdAndUp() {
       return this.$vuetify.breakpoint.mdAndUp
+    },
+  },
+  methods: {
+    async logout() {
+      await this.$auth.logout()
+      this.$router.push({ name: 'index' })
     },
   },
 }
