@@ -1,94 +1,44 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
+  <v-container style="height: 100%" fluid>
+    <v-row
+      justify="center"
+      align="center"
+      style="height: 60%"
+      class="grey lighten-4"
+    >
+      <v-col class="text-center" cols="12">
+        <v-container>
+          <h1 class="text-h1">WeKan</h1>
+          <p class="text-subtitle-1">Project planning made easy</p>
+          <v-btn x-large depressed color="primary" @click="onClick">
+            Sign Up / Log In
+          </v-btn>
+        </v-container>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-container style="max-width: 800px">
+          <h2 class="text-h2">What is WeKan?</h2>
+          <p class="text-body">
+            WeKan is an online Kanban system for managing your projects. Create
+            boards, organise cards and tasks, and share with your colleagues.
+            Project planning has never been easier!
           </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+          <v-btn depressed color="primary" @click="onClick">Try it out</v-btn>
+        </v-container>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo,
-  },
   layout: 'index',
+  methods: {
+    onClick() {
+      this.$router.push({ name: 'login' })
+    },
+  },
 }
 </script>
