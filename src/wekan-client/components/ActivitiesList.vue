@@ -6,28 +6,27 @@
     @change="onDragActivity"
   >
     <v-col v-for="(activity, j) in activities" :key="j" cols="12">
-      <v-card outlined>
-        <v-card-text>
-          <v-row>
-            <v-col>
-              {{ activity.title }}
-            </v-col>
-            <v-col class="text-right">
-              <create-edit-activity-dialog
-                :id="activity.id"
-                :card-id="cardId"
-                :title="activity.title"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon small v-bind="attrs" v-on="on">
-                    <v-icon>mdi-pencil-outline</v-icon>
-                  </v-btn>
-                </template>
-              </create-edit-activity-dialog>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
+      <v-sheet>
+        <v-row>
+          <v-col>
+            {{ activity.title }}
+          </v-col>
+          <v-col class="text-right">
+            <create-edit-activity-dialog
+              :id="activity.id"
+              :card-id="cardId"
+              :title="activity.title"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-pencil-outline</v-icon>
+                </v-btn>
+              </template>
+            </create-edit-activity-dialog>
+          </v-col>
+        </v-row>
+      </v-sheet>
+      <v-divider class="mt-2 mb-1"></v-divider>
     </v-col>
 
     <template v-slot:footer>

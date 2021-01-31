@@ -29,7 +29,7 @@
         <v-row v-if="boardId">
           <v-col cols="12">
             <v-row align="center" class="px-3">
-              <h1>{{ board.title }}</h1>
+              <h1 class="text-h4">{{ board.title }}</h1>
               <v-spacer></v-spacer>
               <create-edit-board-dialog
                 v-if="isOwner"

@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <v-sheet class="pa-4">
-        <h2>Boards</h2>
+        <h2 class="text-h4">Boards</h2>
       </v-sheet>
 
       <v-divider></v-divider>

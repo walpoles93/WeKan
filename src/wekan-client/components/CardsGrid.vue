@@ -3,7 +3,7 @@
     <v-col v-for="(card, i) in cards" :key="i" cols="12" sm="6" md="4">
       <v-card outlined>
         <v-card-title>
-          <h2>{{ card.title }}</h2>
+          <h2 class="text-h6">{{ card.title }}</h2>
           <v-spacer></v-spacer>
           <create-edit-card-dialog
             :id="card.id"
@@ -17,6 +17,8 @@
             </template>
           </create-edit-card-dialog>
         </v-card-title>
+
+        <v-divider></v-divider>
 
         <v-card-text>
           <activities-list
